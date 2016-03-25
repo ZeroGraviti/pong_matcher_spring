@@ -40,12 +40,12 @@ export HOST=http://localhost:8080
 
 Now follow the [interaction instructions][interaction].
 
-## Running on [Your-Local-Boshlite][bosh-lite] `version 9000.103.0`
+## Running on [Your__Local__Boshlite__VM (I used the virtualbox provider)][bosh-lite] `version 9000.103.0`
 
 Log in.
 
 ```bash
-cf login -a https://api.bosh-lite.com
+cf login -a api.bosh-lite.com -u admin -p admin --skip-ssl-validatino
 ```
 
 Target your org / space.
@@ -69,14 +69,27 @@ mvn package
 Push the app using a route name e.g., "springpong". You can choose to use `--no-route` or `--random-route` instead. Its manifest assumes you called your MySqlDB instance 'mysql'.
 
 ```bash
-cf push -n springpong
+cf push -n springpong -m 512M
+```
+If you havent specified the route name as above or if your deployment is crashing into a redeployment loop, you can also try to disable the route and then re-enable it after successful deployment.
+```bash
+cf push --no-route
+cf map-route springpong bosh-lite.com -n springpong
 ```
 
+You might need to scale up or down depending on the load on your env for first time/re deployments
+
+```bash
+cf scale -m 256M springpong
+```
 Export the test host
 
 ```bash
 export HOST=http://springpong.bosh-lite.com
 ```
+If you wish, during deployment/restart/restage you can tail the logs using `cf logs springpong`
+Since this version of bosh-lite is DEA based warden (and not Diego garden), disabling the health-check i.e., `cf set-health-check springpone none` AFAIK has no effect.
+
 
 Now follow the [interaction instructions][interaction].
 
