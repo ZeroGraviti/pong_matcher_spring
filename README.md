@@ -7,12 +7,12 @@ It has an [acceptance test suite][acceptance-test] you might like to look at.
 
 **Note**: We highly recommend that you use the latest versions of any software required by this sample application. For example, make sure that you are using the most recent verion of maven.
 
-## Running on [Pivotal Web Services][pws]
+## Running on [Your-Local-Boshlite][bosh-lite] `version 9000.103.0`
 
 Log in.
 
 ```bash
-cf login -a https://api.run.pivotal.io
+cf login -a https://api.bosh-lite.com
 ```
 
 Target your org / space.
@@ -21,46 +21,43 @@ Target your org / space.
 cf target -o myorg -s myspace
 ```
 
-Sign up for a cleardb instance.
+Create your own mysql cups [cups] instance entering sensible values for the parameters.
 
 ```bash
-cf create-service cleardb spark mysql
+cf cups mysql -p "host, port, dbname, username, password"
 ```
 
 Build the app.
 
 ```bash
-brew install maven
 mvn package
 ```
 
-Push the app. Its manifest assumes you called your ClearDB instance 'mysql'.
+Push the app using a route name e.g., "springpong". You can choose to use `--no-route` or `--random-route` instead. Its manifest assumes you called your MySqlDB instance 'mysql'.
 
 ```bash
-cf push -n mysubdomain
+cf push -n springpong
 ```
 
 Export the test host
 
 ```bash
-export HOST=http://mysubdomain.cfapps.io
+export HOST=http://springpong.bosh-lite.com
 ```
 
 Now follow the [interaction instructions][interaction].
 
 ## Running locally
 
-The following assumes you have a working Java 1.8 SDK installed.
+The following assumes you have a working Java 1.8 SDK installed and Maven 3+.
 
-Install and start mysql:
+Install(if you dont already have) and start mysql service. Login with an appropriate mysql client :
 
 ```bash
-brew install mysql
-mysql.server start
 mysql -u root
 ```
 
-Create a database user and table in the MySQL REPL you just opened:
+Create a database user (you might want to add entries for the ip address reachable from your bosh-lite vm) and table in the MySQL REPL you just opened:
 
 ```sql
 CREATE USER 'springpong'@'localhost' IDENTIFIED BY 'springpong';
@@ -69,7 +66,7 @@ GRANT ALL ON pong_matcher_spring_development.* TO 'springpong'@'localhost';
 exit
 ```
 
-Start the application server from your IDE or the command line:
+Start the SpringBoot app from your IDE or the command line:
 
 ```bash
 mvn spring-boot:run
@@ -84,5 +81,5 @@ export HOST=http://localhost:8080
 Now follow the [interaction instructions][interaction].
 
 [acceptance-test]:https://github.com/cloudfoundry-samples/pong_matcher_acceptance
-[pws]:https://run.pivotal.io
+[bosh-lite]:https://github.com/cloudfoundry/bosh-lite
 [interaction]:https://github.com/cloudfoundry-samples/pong_matcher_grails#interaction-instructions
