@@ -45,7 +45,7 @@ Now follow the [interaction instructions][interaction].
 Log in.
 
 ```bash
-cf login -a api.bosh-lite.com -u admin -p admin --skip-ssl-validatino
+cf login -a api.bosh-lite.com -u admin -p admin --skip-ssl-validation
 ```
 
 Target your org / space.
