@@ -54,7 +54,7 @@ Target your org / space.
 cf target -o myorg -s myspace
 ```
 
-Create your own mysql cups [cups] instance entering sensible values for the parameters.
+Create your own mysql [cups] [cups] service instance entering sensible values for the parameters.
 
 ```bash
 cf cups mysql -p "host, port, dbname, username, password"
@@ -80,6 +80,7 @@ export HOST=http://springpong.bosh-lite.com
 
 Now follow the [interaction instructions][interaction].
 
-[acceptance-test]:https://github.com/cloudfoundry-samples/pong_matcher_acceptance
 [bosh-lite]:https://github.com/cloudfoundry/bosh-lite
+[cups] http://docs.cloudfoundry.org/devguide/services/user-provided.html#create
+[acceptance-test]:https://github.com/cloudfoundry-samples/pong_matcher_acceptance
 [interaction]:https://github.com/cloudfoundry-samples/pong_matcher_grails#interaction-instructions
