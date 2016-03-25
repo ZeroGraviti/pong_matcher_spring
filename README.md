@@ -7,6 +7,39 @@ It has an [acceptance test suite][acceptance-test] you might like to look at.
 
 **Note**: We highly recommend that you use the latest versions of any software required by this sample application. For example, make sure that you are using the most recent verion of maven.
 
+## Running locally
+
+The following assumes you have a working Java 1.8 SDK installed and Maven 3+.
+
+Install(if you dont already have) and start mysql service. Login with an appropriate mysql client :
+
+```bash
+mysql -u root
+```
+
+Create a database user (you might want to add entries for the ip address reachable from your bosh-lite vm) and table in the MySQL REPL you just opened:
+
+```sql
+CREATE USER 'springpong'@'localhost' IDENTIFIED BY 'springpong';
+CREATE DATABASE pong_matcher_spring_development;
+GRANT ALL ON pong_matcher_spring_development.* TO 'springpong'@'localhost';
+exit
+```
+
+Start the SpringBoot app from your IDE or the command line:
+
+```bash
+mvn spring-boot:run
+```
+
+Export the test host
+
+```bash
+export HOST=http://localhost:8080
+```
+
+Now follow the [interaction instructions][interaction].
+
 ## Running on [Your-Local-Boshlite][bosh-lite] `version 9000.103.0`
 
 Log in.
@@ -43,39 +76,6 @@ Export the test host
 
 ```bash
 export HOST=http://springpong.bosh-lite.com
-```
-
-Now follow the [interaction instructions][interaction].
-
-## Running locally
-
-The following assumes you have a working Java 1.8 SDK installed and Maven 3+.
-
-Install(if you dont already have) and start mysql service. Login with an appropriate mysql client :
-
-```bash
-mysql -u root
-```
-
-Create a database user (you might want to add entries for the ip address reachable from your bosh-lite vm) and table in the MySQL REPL you just opened:
-
-```sql
-CREATE USER 'springpong'@'localhost' IDENTIFIED BY 'springpong';
-CREATE DATABASE pong_matcher_spring_development;
-GRANT ALL ON pong_matcher_spring_development.* TO 'springpong'@'localhost';
-exit
-```
-
-Start the SpringBoot app from your IDE or the command line:
-
-```bash
-mvn spring-boot:run
-```
-
-Export the test host
-
-```bash
-export HOST=http://localhost:8080
 ```
 
 Now follow the [interaction instructions][interaction].
